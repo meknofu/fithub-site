@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FITHUB — Home (draft version)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <style>
+:root{
+  --bg:#0b0b0b;
+  --card:#121212;
+  --accent:#e5c76a;
+  --muted:#9b9b9b;
+  --glass: rgba(255,255,255,0.03);
+  --container:1200px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;background:var(--bg);color:#fff;-webkit-font-smoothing:antialiased}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px}
+
+/* Header */
+.site-header{display:flex;align-items:center;justify-content:space-between;padding:18px 0;position:sticky;top:0;z-index:60;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:46px;height:38px;border-radius:8px;background:linear-gradient(135deg,#191919, #0f0f0f);display:flex;align-items:center;justify-content:center;border:2px solid rgba(225,198,106,0.06)}
+.logo h1{margin:0;font-size:18px;font-weight:800;letter-spacing:1px}
+.main-nav{display:flex;gap:26px;align-items:center}
+.main-nav a{color:#dcdcdc;text-decoration:none;font-weight:600;opacity:0.95}
+.btn-login{background:var(--accent);color:#081010;padding:10px 18px;border-radius:24px;font-weight:700}
+
+/* Hero */
+.hero{position:relative;height:82vh;display:flex;align-items:center}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.45)}
+.overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(7,7,7,0.6) 0%, rgba(7,7,7,0.88) 65%)}
+.hero-inner{position:relative;z-index:3;display:flex;gap:40px;align-items:flex-start;padding:60px 0}
+.left{flex:1;max-width:740px}
+.kicker{display:inline-block;background:var(--glass);padding:8px 14px;border-radius:8px;color:var(--muted);font-weight:600;margin-bottom:18px}
+h2{font-size:48px;line-height:1.03;margin:0 0 14px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.lead{color:#cfcfcf;max-width:620px;margin:0 0 20px}
+.hero-cta{display:flex;gap:16px;margin-top:22px}
+.btn{padding:12px 26px;border-radius:28px;border:0;cursor:pointer;font-weight:700}
+.btn-primary{background:var(--accent);color:#071010}
+.btn-outline{background:transparent;border:2px solid rgba(255,255,255,0.08);color:#fff;display:inline-flex;align-items:center;justify-content:center}
+
+/* Right widgets */
+.right{width:320px;display:flex;flex-direction:column;gap:16px}
+.widget{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:12px;border:1px solid rgba(255,255,255,0.03)}
+.cal-widget{display:flex;align-items:center;gap:12px}
+.cal-widget img{width:64px;height:64px;border-radius:10px;object-fit:cover}
+.num{font-weight:800;color:var(--accent);font-size:20px}
+.num.clickable{cursor:pointer;color:#ffd86b}
+.lp{width:56px;height:56px;border-radius:10px;background:#0b0b0b;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.03);font-weight:800}
+
+/* Vinyl */
+.vinyl-wrap{display:flex;justify-content:center;margin-top:-80px;padding:0 24px}
+.vinyl{width:220px;height:220px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #2b2b2b 20%, #0b0b0b 51%, #000 100%);border:6px solid rgba(225,198,106,0.95);box-shadow:0 10px 40px rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.vinyl.spin{animation:spin 5s linear infinite}
+.vinyl:hover{box-shadow:0 14px 60px rgba(225,198,106,0.85);transform:scale(1.02)}
+.vinyl .label{width:70px;height:70px;border-radius:50%;background:#fff;color:#000;display:flex;align-items:center;justify-content:center;font-weight:800}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* Features */
+.features{display:flex;gap:20px;padding:40px 0;margin-top:20px;align-items:flex-start}
+.feature-left{flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:14px;padding:28px}
+.feature-rights{display:flex;flex-direction:column;gap:18px;width:420px}
+.big-block{background:#111;border-radius:14px;padding:24px;border:1px solid rgba(255,255,255,0.03)}
+
+/* Cards */
+.cards-row{display:flex;gap:20px;padding:40px 0;flex-wrap:wrap}
+.card{width:250px;height:300px;border-radius:14px;overflow:hidden;position:relative;background:var(--card);border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 30px rgba(0,0,0,0.6);transition:transform .4s ease;cursor:pointer}
+.card .img-front,.card .img-back{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity .6s ease}
+.card .img-back{opacity:0}
+.card:hover{transform:translateY(-12px)}
+.card:hover .img-back{opacity:1}
+.card .title{position:absolute;left:14px;bottom:14px;padding:8px 12px;background:rgba(0,0,0,0.6);border-radius:8px;color:var(--accent);font-weight:800}
+.heart{position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center}
+
+/* Tech CTA & footer */
+.tech-cta{display:flex;justify-content:space-between;align-items:center;padding:60px 0}
+.txt{font-size:24px}
+.accent{color:var(--accent);font-weight:900}
+footer{padding:40px 24px;border-top:1px solid rgba(255,255,255,0.03)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center}
+
+/* Modal styles (global) */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  justify-content: center; align-items: center;
+  z-index: 9999;
+}
+.modal-overlay.open { display:flex; }
+.modal-window {
+  background: #121212; color: #fff;
+  padding: 20px; border-radius: 16px;
+  max-width: 520px; width: 92%;
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  animation: pop 0.25s ease;
+  position: relative;
+}
+.modal-close {
+  position: absolute; top: 10px; right: 15px;
+  background: none; border: none; color: #fff;
+  font-size: 26px; cursor: pointer;
+}
+.modal-window h2 { color: var(--accent); margin-top: 0; }
+.modal-window input, .modal-window textarea, .modal-window select {
+  width: 100%; margin: 8px 0; padding: 10px;
+  border-radius: 10px; border: 1px solid #333;
+  background: #1c1c1c; color: #fff;
+  font-size: 14px;
+}
+.modal-window button {
+  background: linear-gradient(135deg, #e5c76a, #ffd86b);
+  border: none;
+  color: #081010;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+.modal-window button:hover {
+  background: linear-gradient(135deg, #ffd86b, #e5c76a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+/* Responsive */
+@media (max-width:1000px){
+  .hero-inner{flex-direction:column;padding:36px 0}
+  .right{width:100%}
+  .vinyl-wrap{margin-top:20px}
+  .features{flex-direction:column;padding:20px 0}
+  .cards-row{justify-content:center}
+  h2{font-size:34px}
+}
+@media (max-width:520px){
+  .container{padding:0 16px}
+  h2{font-size:28px}
+  .vinyl{width:160px;height:160px}
+  .right{display:none}
+  .card{width:100%;max-width:420px;height:260px}
+  .feature-rights{width:100%}
+  .features{gap:12px}
+}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <div class="mark">
+        <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 9h2v2H2zM6 5h2v8H6zM10 3h2v10h-2zM14 7h2v6h-2zM18 1h2v12h-2z"/>
+        </svg>
+      </div>
+      <h1>FITHUB</h1>
+    </div>
+
+    <!-- Top right menu -->
+    <nav class="top-right-menu">
+      <div class="top-menu-item" data-modal="main">Home</div>
+      <div class="top-menu-item" data-modal="mission">Mission</div>
+      <div class="top-menu-item" data-modal="functions">Functions</div>
+      <div class="top-menu-item" data-modal="reviews">Reviews</div>
+    </nav>
+
+    <style>
+      .top-right-menu {
+        position: fixed;
+        top: 20px;
+        right: 24px;
+        display: flex;
+        gap: 24px;
+        z-index: 1000;
+      }
+
+      .top-right-menu .top-menu-item {
+        font-size: 16px;
+        font-weight: 600;
+        color: #dcdcdc;
+        transition: all 0.3s ease;
+      }
+
+      .top-right-menu .top-menu-item:hover {
+        font-style: italic;
+        color: var(--accent);
+        text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent);
+        cursor: pointer;
+      }
+    </style>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1600&q=80')"></div>
+      <div class="overlay"></div>
+
+      <div class="hero-inner container">
+        <div class="left">
+          <div class="kicker">Track Calories, Monitor Nutrients & Plan Your Diet</div>
+          <h2>Achieve your fitness goals<br>without complicated calculations</h2>
+          <p class="lead">Become stronger with your own digital nutritionist — take a photo of your food and get instant plans and tracking.</p>
+          <div class="hero-cta">
+            <a class="btn btn-outline" id="startBot" href="https://t.me/fitthubbot" target="_blank">Start</a>
+            <button class="btn btn-primary">Learn more</button>
+          </div>
+        </div>
+
+        <aside class="right">
+          <div class="widget cal-widget">
+            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=200&q=60" alt="mini">
+            <div>
+              <div class="muted">Your result</div>
+              <div class="num" id="userKcal">1800 <span class="kcal">kcal</span></div>
+            </div>
+          </div>
+
+          <div class="widget playlist widget-small">
+            <div class="lp">GYM</div>
+            <div>
+              <div class="title">Playlist</div>
+              <div class="muted">High-energy music for training</div>
+            </div>
+          </div>
+
+          <div class="widget">
+            <div class="title">Who is FITHUB for?</div>
+            <ul class="muted">
+              <li>For athletes</li>
+              <li>For students</li>
+              <li>For beginners</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="vinyl-wrap container">
+      <div id="vinyl" class="vinyl" aria-hidden="true">
+        <div class="label">GYM</div>
+      </div>
+    </div>
+
+    <section class="features container">
+      <div class="feature-left big-block">
+        <h3>Nutrition is the key to your progress</h3>
+        <p class="muted">Upload a photo of your food — the neural network detects it and calculates the nutrients. Forget manual tracking.</p>
+      </div>
+
+      <div class="feature-rights">
+        <div class="big-block">Just snap it — we’ll count everything for you</div>
+        <div class="big-block">Workout planning and nutrition tracking</div>
+      </div>
+    </section>
+
+    <section class="cards-row container">
+      <div class="card" data-front="" data-back="">
+        <div class="img-front" style="background-image:url('https://i.pinimg.com/736x/7b/58/90/7b589038ea3d23344ec289769f077f4c.jpg')"></div>
+        <div class="img-back" style="background-image:url('https://i.pinimg.com/1200x/3a/3a/2e/3a3a2e64ed42dd9a77168152e00a7d0e.jpg')"></div>
+        <div class="title">Photo analysis</div>
+        <div class="heart">❤</div>
+      </div>
+
+      <div class="card" data-front="" data-back="">
+        <div class="img-front" style="background-image:url('https://i.pinimg.com/736x/02/4c/5e/024c5e7e830a54aca00e82566ed46995.jpg')"></div>
+        <div class="img-back" style="background-image:url('https://i.pinimg.com/736x/a1/d7/9f/a1d79fd538b1f790e620f487fbd1b782.jpg')"></div>
+        <div class="title">Virtual chef</div>
+        <div class="heart">❤</div>
+      </div>
+
+      <div class="card" data-front="" data-back="">
+        <div class="img-front" style="background-image:url('https://i.pinimg.com/736x/5c/ae/82/5cae823cbe5ca525016d0b035d3460d1.jpg')"></div>
+        <div class="img-back" style="background-image:url('https://i.pinimg.com/1200x/9e/aa/fb/9eaafbbce446b268fa17f246c5821764.jpg')"></div>
+        <div class="title">Food diary</div>
+        <div class="heart">❤</div>
+      </div>
+
+      <div class="card" data-front="" data-back="">
+        <div class="img-front" style="background-image:url('https://i.pinimg.com/736x/d4/e0/6d/d4e06df2242810c49a653363f4092660.jpg')"></div>
+        <div class="img-back" style="background-image:url('https://i.pinimg.com/736x/9f/2d/ba/9f2dba0f77574b71f3817917676b3176.jpg')"></div>
+        <div class="title">Workout selection</div>
+        <div class="heart">❤</div>
+      </div>
+    </section>
+
+    <section class="tech-cta container">
+      <div class="txt"><span class="accent">Technologies</span> for your health</div>
+      <div><button class="btn btn-outline">Join</button></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        <div class="title">Join our community</div>
+        <div class="muted">Become the next success story</div>
+      </div>
+      <div style="text-align:right">
+        <div>We’d love to hear your feedback</div>
+        <div class="muted">© 2025 FITHUB</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal container (created/used by JS) -->
+  <div id="app-modals-root"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const modalsRoot = document.getElementById("app-modals-root");
+
+  // ===== Calorie calculator (click on kcal widget) =====
+  const userKcal = document.getElementById("userKcal");
+  if(userKcal){
+    userKcal.addEventListener("click", () => {
+      openModal(`
+        <h2>📊 Calorie calculator</h2>
+        <p class="muted">Choose your gender and enter your details:</p>
+        <label>Gender:</label>
+        <select id="genderSelect">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        <input type="number" id="weightInput" placeholder="Weight (kg)">
+        <input type="number" id="heightInput" placeholder="Height (cm)">
+        <input type="number" id="ageInput" placeholder="Age (years)">
+        <button id="calcKcalBtn">Calculate</button>
+        <div id="kcalResult" style="margin-top:12px;font-weight:700;color:var(--accent)"></div>
+      `);
+
+      document.getElementById("calcKcalBtn").onclick = () => {
+        const gender = document.getElementById("genderSelect").value;
+        const weight = Number(document.getElementById("weightInput").value);
+        const height = Number(document.getElementById("heightInput").value);
+        const age = Number(document.getElementById("ageInput").value);
+        const out = document.getElementById("kcalResult");
+
+        if(!weight || !height || !age){
+          out.textContent = "Please fill in all fields.";
+          return;
+        }
+
+        let bmr = gender === "male" 
+          ? 10*weight + 6.25*height - 5*age + 5
+          : 10*weight + 6.25*height - 5*age - 161;
+
+        const roundedBMR = Math.round(bmr);
+        out.textContent = `Your daily calories: ${roundedBMR} kcal`;
+        userKcal.innerHTML = `${roundedBMR} <span class="kcal">kcal</span>`;
+      };
+    });
+  }
+
+  // ===== Modal helpers =====
+  function openModal(html) {
+    modalsRoot.innerHTML = `
+      <div class="modal-overlay open">
+        <div class="modal-window">
+          <button class="modal-close">&times;</button>
+          ${html}
+        </div>
+      </div>
+    `;
+    document.querySelector(".modal-close").addEventListener("click", closeModal);
+    document.querySelector(".modal-overlay").addEventListener("click", e => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+  }
+
+  function closeModal() {
+    modalsRoot.innerHTML = "";
+  }
+
+  // ===== Top panel: Home, Mission, Functions, Reviews =====
+  const menuItems = {
+    "main": `
+      <h2>🏠 Home</h2>
+      <p>Welcome to our app! Track your nutrition, plan your workouts, and keep a health diary easily and conveniently.</p>
+    `,
+    "mission": `
+      <h2>🌟 Our Mission</h2>
+      <p>We create a space where caring for your health becomes simple and exciting. With FITHUB, you’ll see real progress and achieve your goals — one step at a time.</p>
+    `,
+    "functions": `
+      <h2>⚙️ App Features</h2>
+      <ul>
+        <li>📊 Calorie Calculator</li>
+        <li>🍳 Virtual Chef</li>
+        <li>🥗 Food Diary</li>
+        <li>🏋️ Workout Selection</li>
+        <li>📸 Photo-Based Food Analysis</li>
+        <li>💬 Reviews from trainers and students</li>
+      </ul>
+    `,
+    "reviews": `
+      <h2>💬 Reviews</h2>
+
+      <h3>📌 Trainers</h3>
+      <ul id="trainersReviews">
+        <li>Trainer: "With this app, my clients can see their progress every step of the way."</li>
+        <li>Trainer: "Tracking nutrition and workouts online is incredibly convenient."</li>
+      </ul>
+
+      <h3>🎓 Students</h3>
+      <ul id="studentsReviews">
+        <li>Student: "FITHUB helped me eat right and plan my workouts."</li>
+        <li>Student: "The app keeps me motivated and provides accurate recommendations."</li>
+      </ul>
+
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:14px 0">
+
+      <h3 style="margin-top:10px;">📝 Leave Your Review</h3>
+      <select id="reviewRole">
+        <option value="student">Student</option>
+        <option value="trainer">Trainer</option>
+      </select>
+      <textarea id="reviewText" rows="3" placeholder="Write your review..." style="resize:none"></textarea>
+      <button id="sendReviewBtn">Submit review</button>
+
+      <div id="reviewMsg" style="margin-top:10px;font-weight:700;color:var(--accent)"></div>
+`
+  };
+
+  document.querySelectorAll(".top-menu-item").forEach(item => {
+    item.addEventListener("click", () => {
+      const key = item.dataset.modal;
+      if(menuItems[key]) openModal(menuItems[key]);
+    });
+  });
+
+  // ===== "Learn more" button scrolls to cards =====
+  const btnMore = document.querySelector(".btn-primary");
+  const cardsSection = document.querySelector(".cards-row");
+  if (btnMore && cardsSection) {
+    btnMore.addEventListener("click", () => {
+      cardsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  // ===== Vinyl click: spin + open Spotify =====
+  const vinyl = document.getElementById("vinyl");
+  if (vinyl) {
+    vinyl.addEventListener("click", () => {
+      vinyl.classList.toggle("spin");
+      window.open("https://open.spotify.com/playlist/37i9dQZF1E356dFTIQgyJT?si=1dbfddd61bfa413a", "_blank");
+    });
+  }
+
+  // ===== Cards binding =====
+  function bindCards() {
+    document.querySelectorAll(".card").forEach(card => {
+      const titleEl = card.querySelector(".title");
+      const title = titleEl ? titleEl.textContent.toLowerCase() : "";
+      card.addEventListener("click", () => {
+        if(title.includes("photo")) {
+          openModal(`
+            <h2>📸 Photo-Based Food Analysis</h2>
+            <p class="muted">For quick food analysis, use the bot:</p>
+            <a href="https://t.me/fitthubbot" target="_blank"><button>Go to bot</button></a>
+          `);
+        } else if(title.includes("virtual") || title.includes("chef")) {
+          showVirtualCook();
+        } else if(title.includes("food diary")) {
+          showDiary();
+        } else if(title.includes("workout")) {
+          showWorkout();
+        } else if(title.includes("mission")) {
+          openModal(menuItems["mission"]);
+        } else if(title.includes("review")) {
+          openModal(menuItems["reviews"]);
+        }
+      });
+    });
+  }
+
+  // ===== Virtual Chef (with FREE Edamam API) =====
+  function showVirtualCook() {
+    openModal(`
+      <h2>🍳 Virtual Chef</h2>
+      <p class="muted">Enter one food for analysis (for example: oatmeal, chicken, rice, egg):</p>
+      <input id="ingredientsInput" placeholder="Type a food name in English">
+      <button id="findRecipesBtn">Get nutrition & recipe</button>
+      <div id="recipesResult" style="margin-top:12px; max-height:300px; overflow:auto"></div>
+    `);
+
+    document.getElementById("findRecipesBtn").onclick = async () => {
+      const val = document.getElementById("ingredientsInput").value;
+      const product = (val || "").toLowerCase().trim();
+      const resultBox = document.getElementById("recipesResult");
+
+      if (!product) {
+        resultBox.innerHTML = "<p>Please enter a food name.</p>";
+        return;
+      }
+
+      resultBox.innerHTML = "<p>Loading...</p>";
+
+      try {
+        // Using FREE USDA FoodData Central API
+        // Sign up at: https://fdc.nal.usda.gov/api-key-signup.html
+        const apiKey = "aIof49plAFZKBz3x1ATfIdAO2RgZHvLcWje5BvFa";  // ⚠️ REPLACE WITH YOUR FREE USDA API KEY
+        
+        // Search for the food in USDA database
+        const searchUrl = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(product)}&pageSize=1&api_key=${apiKey}`;
+        
+        const response = await fetch(searchUrl);
+        
+        if (!response.ok) {
+          throw new Error("API error");
+        }
+
+        const data = await response.json();
+        
+        if (!data.foods || data.foods.length === 0) {
+          resultBox.innerHTML = `<p>Food not found in database. Try another item like: chicken, rice, egg, oatmeal, salmon, broccoli.</p>`;
+          return;
+        }
+
+        const food = data.foods[0];
+        const nutrients = food.foodNutrients;
+        
+        // Helper function to get nutrient value by ID
+        const getNutrient = (nutrientId) => {
+          const nutrient = nutrients.find(n => n.nutrientId === nutrientId);
+          return nutrient ? Math.round(nutrient.value) : 0;
+        };
+        
+        const kcal = getNutrient(1008);  // Energy (kcal)
+        const protein = getNutrient(1003);  // Protein
+        const fat = getNutrient(1004);  // Total lipid (fat)
+        const carbs = getNutrient(1005);  // Carbohydrate
+        
+        // Recipe database
+        const recipes = {
+          'chicken': 'Grilled Chicken: Season with salt, pepper, garlic powder. Grill 6-7 minutes per side at medium-high heat until internal temp reaches 165°F.',
+          'egg': 'Scrambled Eggs: Beat 2 eggs with a splash of milk. Melt butter in pan, pour eggs, stir gently over medium heat until fluffy.',
+          'rice': 'Perfect Rice: Rinse 1 cup rice. Add 2 cups water, bring to boil. Cover, reduce heat, simmer 15 minutes. Let rest 5 minutes.',
+          'oatmeal': 'Oatmeal Bowl: Cook ½ cup oats in 1 cup milk. Simmer 5 minutes stirring occasionally. Top with berries, nuts, and honey.',
+          'salmon': 'Baked Salmon: Season with lemon, dill, salt, and pepper. Bake at 400°F for 12-15 minutes until fish flakes easily.',
+          'broccoli': 'Steamed Broccoli: Steam florets for 5-7 minutes until tender-crisp. Toss with olive oil, minced garlic, and fresh lemon juice.',
+          'pasta': 'Al Dente Pasta: Boil salted water, add pasta. Cook 8-10 minutes, stirring occasionally. Drain and toss with olive oil and parmesan.',
+          'banana': 'Banana Smoothie: Blend 1 banana, 1 cup milk, handful of ice, and 1 tbsp honey. Add protein powder for post-workout nutrition.',
+          'yogurt': 'Greek Yogurt Parfait: Layer yogurt with granola and fresh berries. Drizzle with honey and sprinkle with chia seeds.',
+          'avocado': 'Avocado Toast: Mash ripe avocado on toasted whole grain bread. Top with poached egg, cherry tomatoes, and everything bagel seasoning.',
+          'beef': 'Pan-Seared Steak: Season generously with salt and pepper. Sear in hot pan 3-4 minutes per side. Rest 5 minutes before slicing.',
+          'turkey': 'Roasted Turkey Breast: Rub with herbs and olive oil. Roast at 350°F until internal temp is 165°F. Let rest before slicing.',
+          'tuna': 'Tuna Salad: Mix canned tuna with Greek yogurt, diced celery, red onion. Serve on lettuce or whole grain bread.',
+          'spinach': 'Sautéed Spinach: Heat olive oil and garlic. Add spinach, cook until wilted (2-3 min). Season with salt, pepper, lemon.',
+          'sweet potato': 'Roasted Sweet Potato: Cut into cubes, toss with olive oil and spices. Roast at 425°F for 25-30 minutes until crispy.',
+          'quinoa': 'Fluffy Quinoa: Rinse quinoa. Cook 1 cup quinoa in 2 cups water. Simmer 15 minutes covered. Fluff with fork.',
+          'beans': 'Seasoned Beans: Sauté onions and garlic. Add beans, cumin, paprika. Simmer 10 minutes. Mash slightly for creamy texture.',
+          'apple': 'Baked Apple: Core apple, fill with cinnamon and oats. Bake at 350°F for 30 minutes. Serve with vanilla yogurt.',
+          'cheese': 'Cheese Plate: Serve variety of cheeses with crackers, grapes, nuts, and honey for balanced snack.',
+          'milk': 'Protein Shake: Blend milk with banana, protein powder, peanut butter, and ice for post-workout recovery.'
+        };
+        
+        // Find matching recipe
+        let recipe = `Try adding ${product} to salads, grain bowls, or wraps for a nutritious meal.`;
+        for (const [key, value] of Object.entries(recipes)) {
+          if (product.includes(key) || key.includes(product)) {
+            recipe = value;
+            break;
+          }
+        }
+
+        resultBox.innerHTML = `
+          <h3>Nutrition Facts (per 100g)</h3>
+          <b>${product.charAt(0).toUpperCase() + product.slice(1)}</b><br>
+          ${kcal} kcal • ${protein}g protein • ${fat}g fat • ${carbs}g carbs
+          <br><br>
+          <b>Suggested Recipe:</b><br>
+          ${recipe}
+        `;
+        
+      } catch (err) {
+        console.error(err);
+        resultBox.innerHTML = "<p>Unable to fetch nutrition data. Make sure you've added your USDA API key! <br><br>Get a free key at: <a href='https://fdc.nal.usda.gov/api-key-signup.html' target='_blank' style='color:var(--accent)'>fdc.nal.usda.gov/api-key-signup.html</a></p>";
+      }
+    };
+  }
+
+  // ===== Food Diary =====
+  function showDiary() {
+    openModal(`
+      <h2>🥗 Food Diary & Recipe Finder</h2>
+      <p class="muted">Enter your target nutritional values to find matching recipes:</p>
+      <input id="kcalInput" type="number" placeholder="Target Calories (kcal)">
+      <input id="proteinInput" type="number" placeholder="Target Protein (g)">
+      <input id="fatInput" type="number" placeholder="Target Fats (g)">
+      <input id="carbInput" type="number" placeholder="Target Carbs (g)">
+      <button id="findRecipeBtn">Find Matching Recipes</button>
+      <div id="diaryResult" style="margin-top:12px;max-height:300px;overflow:auto"></div>
+    `);
+
+    document.getElementById("findRecipeBtn").onclick = async () => {
+      const targetKcal = Number(document.getElementById("kcalInput").value);
+      const targetProtein = Number(document.getElementById("proteinInput").value);
+      const targetFat = Number(document.getElementById("fatInput").value);
+      const targetCarb = Number(document.getElementById("carbInput").value);
+      const out = document.getElementById("diaryResult");
+
+      if(!targetKcal || !targetProtein || !targetFat || !targetCarb){
+        out.innerHTML = "<p>Please fill in all nutritional values.</p>";
+        return;
+      }
+
+      out.innerHTML = "<p>Finding recipes that match your goals...</p>";
+
+      try {
+        // Using USDA API to find foods matching nutritional criteria
+        const apiKey = "aIof49plAFZKBz3x1ATfIdAO2RgZHvLcWje5BvFa";
+        
+        // Calculate what type of food would match these macros
+        const proteinPercent = (targetProtein * 4 / targetKcal) * 100;
+        const carbPercent = (targetCarb * 4 / targetKcal) * 100;
+        const fatPercent = (targetFat * 9 / targetKcal) * 100;
+        
+        // Determine food category based on macro ratios
+        let searchTerm = "balanced meal";
+        let mealType = "Balanced Meal";
+        
+        if (proteinPercent > 40) {
+          searchTerm = "chicken breast";
+          mealType = "High Protein";
+        } else if (carbPercent > 50) {
+          searchTerm = "rice pasta";
+          mealType = "High Carb";
+        } else if (fatPercent > 40) {
+          searchTerm = "salmon avocado";
+          mealType = "High Fat";
+        }
+        
+        const searchUrl = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(searchTerm)}&pageSize=15&api_key=${apiKey}`;
+        
+        const response = await fetch(searchUrl);
+        
+        if (!response.ok) {
+          throw new Error("API error");
+        }
+
+        const data = await response.json();
+        
+        if (!data.foods || data.foods.length === 0) {
+          out.innerHTML = generateOfflineRecipes(targetKcal, targetProtein, targetFat, targetCarb);
+          return;
+        }
+
+        // Filter out duplicates by using unique food names
+        const uniqueFoods = [];
+        const seenNames = new Set();
+        
+        for (const food of data.foods) {
+          const normalizedName = food.description.toLowerCase().trim();
+          if (!seenNames.has(normalizedName)) {
+            seenNames.add(normalizedName);
+            uniqueFoods.push(food);
+          }
+        }
+
+        // Find best matching foods
+        const matches = uniqueFoods.map(food => {
+          const nutrients = food.foodNutrients;
+          const getNutrient = (id) => {
+            const n = nutrients.find(x => x.nutrientId === id);
+            return n ? n.value : 0;
+          };
+          
+          const kcal = getNutrient(1008);
+          const protein = getNutrient(1003);
+          const fat = getNutrient(1004);
+          const carbs = getNutrient(1005);
+          
+          // Calculate how close this food is to target (per 100g)
+          const ratio = targetKcal / (kcal || 1);
+          const scaledProtein = protein * ratio;
+          const scaledFat = fat * ratio;
+          const scaledCarbs = carbs * ratio;
+          
+          const diff = Math.abs(targetProtein - scaledProtein) + 
+                       Math.abs(targetFat - scaledFat) + 
+                       Math.abs(targetCarb - scaledCarbs);
+          
+          return {
+            name: food.description,
+            kcal: Math.round(kcal),
+            protein: Math.round(protein),
+            fat: Math.round(fat),
+            carbs: Math.round(carbs),
+            servingSize: Math.round((targetKcal / kcal) * 100),
+            diff: diff
+          };
+        }).sort((a, b) => a.diff - b.diff).slice(0, 3);
+        
+        let resultHTML = `
+          <h3>🎯 Recommended Recipes for ${mealType}</h3>
+          <p style="color:var(--muted);font-size:13px">Target: ${targetKcal} kcal • ${targetProtein}g P • ${targetFat}g F • ${targetCarb}g C</p>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:10px 0">
+        `;
+        
+        matches.forEach((match, idx) => {
+          const recipe = getRecipeForFood(match.name, match.servingSize);
+          resultHTML += `
+            <div style="margin:15px 0;padding:10px;background:rgba(255,255,255,0.03);border-radius:8px">
+              <b style="color:var(--accent)">${idx + 1}. ${match.name}</b><br>
+              <small style="color:var(--muted)">
+                Per 100g: ${match.kcal} kcal • ${match.protein}g P • ${match.fat}g F • ${match.carbs}g C<br>
+                Recommended serving: ${match.servingSize}g
+              </small>
+              <p style="margin:8px 0 0 0;font-size:13px">${recipe}</p>
+            </div>
+          `;
+        });
+        
+        out.innerHTML = resultHTML;
+        
+      } catch (err) {
+        console.error(err);
+        // Fallback to offline recipe recommendations
+        out.innerHTML = generateOfflineRecipes(targetKcal, targetProtein, targetFat, targetCarb);
+      }
+    };
+  }
+
+  // Helper function to generate offline recipe recommendations
+  function generateOfflineRecipes(kcal, protein, fat, carb) {
+    const proteinPercent = (protein * 4 / kcal) * 100;
+    const carbPercent = (carb * 4 / kcal) * 100;
+    
+    let recipes = [];
+    
+    if (proteinPercent > 40) {
+      recipes = [
+        { name: "Grilled Chicken with Vegetables", protein: 35, fat: 8, carbs: 5, kcal: 220, recipe: "Season 150g chicken breast with herbs. Grill 6-7 min per side. Serve with steamed broccoli and bell peppers." },
+        { name: "Greek Yogurt Protein Bowl", protein: 25, fat: 5, carbs: 15, kcal: 200, recipe: "Mix 200g Greek yogurt with berries, chia seeds, and a drizzle of honey." },
+        { name: "Tuna Salad", protein: 30, fat: 10, carbs: 8, kcal: 240, recipe: "Mix canned tuna with Greek yogurt, celery, cucumber. Serve on lettuce." }
+      ];
+    } else if (carbPercent > 50) {
+      recipes = [
+        { name: "Pasta Primavera", protein: 12, fat: 8, carbs: 65, kcal: 380, recipe: "Cook 100g pasta. Toss with olive oil, garlic, cherry tomatoes, zucchini, and basil." },
+        { name: "Oatmeal Power Bowl", protein: 10, fat: 8, carbs: 50, kcal: 300, recipe: "Cook oats in milk. Top with banana, almonds, honey, and cinnamon." },
+        { name: "Rice Bowl with Veggies", protein: 8, fat: 6, carbs: 55, kcal: 310, recipe: "Steam rice. Top with stir-fried vegetables, soy sauce, and sesame seeds." }
+      ];
+    } else {
+      recipes = [
+        { name: "Salmon with Avocado", protein: 25, fat: 22, carbs: 8, kcal: 330, recipe: "Bake salmon at 400°F for 12-15 min. Serve with sliced avocado and lemon." },
+        { name: "Chicken Avocado Salad", protein: 28, fat: 18, carbs: 12, kcal: 320, recipe: "Grill chicken, dice and mix with avocado, lettuce, olive oil dressing." },
+        { name: "Egg and Cheese Scramble", protein: 20, fat: 24, carbs: 6, kcal: 310, recipe: "Scramble 3 eggs with cheese, spinach, and mushrooms in butter." }
+      ];
+    }
+    
+    let html = `
+      <h3>🍽️ Recipe Recommendations</h3>
+      <p style="color:var(--muted);font-size:13px">Target: ${kcal} kcal • ${protein}g P • ${fat}g F • ${carb}g C</p>
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:10px 0">
+    `;
+    
+    recipes.forEach((r, idx) => {
+      html += `
+        <div style="margin:15px 0;padding:10px;background:rgba(255,255,255,0.03);border-radius:8px">
+          <b style="color:var(--accent)">${idx + 1}. ${r.name}</b><br>
+          <small style="color:var(--muted)">
+            ${r.kcal} kcal • ${r.protein}g P • ${r.fat}g F • ${r.carbs}g C
+          </small>
+          <p style="margin:8px 0 0 0;font-size:13px">${r.recipe}</p>
+        </div>
+      `;
+    });
+    
+    html += `<p style="font-size:12px;color:var(--muted);margin-top:15px">💡 Add your USDA API key for personalized recommendations from thousands of foods!</p>`;
+    
+    return html;
+  }
+  
+  // Helper function to get recipe based on food name
+  function getRecipeForFood(foodName, servingSize) {
+    const name = foodName.toLowerCase();
+    
+    if (name.includes('chicken')) {
+      return `Grill ${servingSize}g chicken seasoned with herbs and spices. Serve with vegetables.`;
+    } else if (name.includes('salmon') || name.includes('fish')) {
+      return `Bake ${servingSize}g at 400°F for 12-15 minutes with lemon and dill.`;
+    } else if (name.includes('beef') || name.includes('steak')) {
+      return `Pan-sear ${servingSize}g beef, season with salt and pepper. Rest before serving.`;
+    } else if (name.includes('rice')) {
+      return `Cook ${servingSize}g rice in water (1:2 ratio). Simmer 15 minutes covered.`;
+    } else if (name.includes('pasta')) {
+      return `Boil ${servingSize}g pasta in salted water for 8-10 minutes. Drain and toss with sauce.`;
+    } else if (name.includes('egg')) {
+      return `Cook eggs as scrambled, fried, or boiled based on preference.`;
+    } else if (name.includes('yogurt')) {
+      return `Serve ${servingSize}g yogurt with berries, granola, and honey.`;
+    } else if (name.includes('avocado')) {
+      return `Mash avocado on toast or add to salads for healthy fats.`;
+    } else {
+      return `Use ${servingSize}g in your favorite recipe or meal prep.`;
+    }
+  }
+
+ // ===== Workout Selection =====
+  function showWorkout() {
+    openModal(`
+      <h2>🏋️ Personalized Workout Plans</h2>
+      <p class="muted">Select your fitness level and goal to get a detailed workout program:</p>
+      <label>Fitness level:</label>
+      <select id="levelSelect">
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+      </select>
+      <label>Goal:</label>
+      <select id="goalSelect">
+        <option value="muscle">Build muscle</option>
+        <option value="lose">Lose weight</option>
+        <option value="maintain">Maintain fitness</option>
+      </select>
+      <button id="getWorkoutBtn">Get workout plan</button>
+      <div id="workoutResult" style="margin-top:12px;max-height:240px;overflow:auto"></div>
+    `);
+
+    document.getElementById("getWorkoutBtn").onclick = () => {
+      const level = document.getElementById("levelSelect").value;
+      const goal = document.getElementById("goalSelect").value;
+      const out = document.getElementById("workoutResult");
+
+      const plans = {
+        "beginner-muscle": `
+          <b>💪 Beginner Muscle Building (3x per week)</b><br>
+          <b>Day 1 - Push Day:</b><br>
+          • Push-ups: 3 sets of 10-12 reps<br>
+          • Dumbbell Shoulder Press: 3 sets of 12 reps<br>
+          • Tricep Dips: 3 sets of 10 reps<br>
+          • Lateral Raises: 3 sets of 12 reps<br><br>
+          
+          <b>Day 2 - Pull Day:</b><br>
+          • Bent-over Rows: 3 sets of 12 reps<br>
+          • Pull-ups/Lat Pulldowns: 3 sets of 8-10 reps<br>
+          • Bicep Curls: 3 sets of 12 reps<br>
+          • Face Pulls: 3 sets of 15 reps<br><br>
+          
+          <b>Day 3 - Leg Day:</b><br>
+          • Squats: 3 sets of 12 reps<br>
+          • Lunges: 3 sets of 10 reps each leg<br>
+          • Leg Curls: 3 sets of 12 reps<br>
+          • Calf Raises: 3 sets of 15 reps<br>
+          • Planks: 3 sets of 30 seconds
+        `,
+        "beginner-lose": `
+          <b>🔥 Beginner Weight Loss (4x per week)</b><br>
+          <b>Day 1 - Full Body Circuit:</b><br>
+          • Jumping Jacks: 2 min<br>
+          • Bodyweight Squats: 15 reps<br>
+          • Push-ups: 10 reps<br>
+          • Mountain Climbers: 30 seconds<br>
+          • Plank: 30 seconds<br>
+          Repeat circuit 3 times<br><br>
+          
+          <b>Day 2 - Cardio:</b><br>
+          • Brisk Walking or Jogging: 30 minutes<br>
+          • Intervals: 1 min fast, 2 min slow<br><br>
+          
+          <b>Day 3 - Full Body Circuit:</b><br>
+          • Burpees: 10 reps<br>
+          • Lunges: 12 reps each leg<br>
+          • Tricep Dips: 12 reps<br>
+          • Bicycle Crunches: 20 reps<br>
+          Repeat circuit 3 times<br><br>
+          
+          <b>Day 4 - Active Recovery:</b><br>
+          • Light yoga or stretching: 20-30 min<br>
+          • Walking: 20 minutes
+        `,
+        "beginner-maintain": `
+          <b>⚖️ Beginner Maintenance (3x per week)</b><br>
+          <b>Day 1 - Upper Body:</b><br>
+          • Bench Press or Push-ups: 3 sets of 12<br>
+          • Dumbbell Rows: 3 sets of 12<br>
+          • Shoulder Press: 3 sets of 10<br>
+          • Bicep Curls: 3 sets of 12<br>
+          • Tricep Extensions: 3 sets of 12<br><br>
+          
+          <b>Day 2 - Lower Body:</b><br>
+          • Squats: 3 sets of 15<br>
+          • Romanian Deadlifts: 3 sets of 12<br>
+          • Leg Press: 3 sets of 12<br>
+          • Calf Raises: 3 sets of 20<br>
+          • Core work: 3 sets<br><br>
+          
+          <b>Day 3 - Cardio & Core:</b><br>
+          • 20 min moderate cardio<br>
+          • Planks: 3 sets of 45 sec<br>
+          • Russian Twists: 3 sets of 20<br>
+          • Leg Raises: 3 sets of 12
+        `,
+        "intermediate-muscle": `
+          <b>💪 Intermediate Muscle Building (4x per week)</b><br>
+          <b>Day 1 - Chest & Triceps:</b><br>
+          • Barbell Bench Press: 4 sets of 8-10 reps<br>
+          • Incline Dumbbell Press: 4 sets of 10 reps<br>
+          • Cable Flyes: 3 sets of 12 reps<br>
+          • Tricep Pushdowns: 4 sets of 12 reps<br>
+          • Overhead Tricep Extension: 3 sets of 12<br><br>
+          
+          <b>Day 2 - Back & Biceps:</b><br>
+          • Deadlifts: 4 sets of 6-8 reps<br>
+          • Pull-ups: 4 sets of 8-10 reps<br>
+          • Barbell Rows: 4 sets of 10 reps<br>
+          • Dumbbell Curls: 4 sets of 12 reps<br>
+          • Hammer Curls: 3 sets of 12 reps<br><br>
+          
+          <b>Day 3 - Legs:</b><br>
+          • Barbell Squats: 4 sets of 8-10 reps<br>
+          • Leg Press: 4 sets of 12 reps<br>
+          • Romanian Deadlifts: 4 sets of 10 reps<br>
+          • Leg Curls: 4 sets of 12 reps<br>
+          • Calf Raises: 4 sets of 15 reps<br><br>
+          
+          <b>Day 4 - Shoulders & Abs:</b><br>
+          • Military Press: 4 sets of 10 reps<br>
+          • Lateral Raises: 4 sets of 12 reps<br>
+          • Face Pulls: 3 sets of 15 reps<br>
+          • Hanging Leg Raises: 3 sets of 12<br>
+          • Cable Crunches: 4 sets of 15
+        `,
+        "intermediate-lose": `
+          <b>🔥 Intermediate Weight Loss (5x per week)</b><br>
+          <b>Day 1 - HIIT (30 min):</b><br>
+          • Warm-up: 5 min<br>
+          • Sprint intervals: 30 sec sprint, 90 sec walk (10 rounds)<br>
+          • Cool-down: 5 min<br><br>
+          
+          <b>Day 2 - Strength Circuit:</b><br>
+          • Kettlebell Swings: 4 sets of 15<br>
+          • Goblet Squats: 4 sets of 12<br>
+          • Push-ups: 4 sets of 15<br>
+          • Burpees: 3 sets of 10<br>
+          • Plank: 3 sets of 60 sec<br><br>
+          
+          <b>Day 3 - Cardio (45 min):</b><br>
+          • Running, cycling, or rowing<br>
+          • Steady pace with 5 min intervals<br><br>
+          
+          <b>Day 4 - Full Body Strength:</b><br>
+          • Deadlifts: 4 sets of 10<br>
+          • Bench Press: 4 sets of 10<br>
+          • Pull-ups: 3 sets of 8<br>
+          • Lunges: 3 sets of 12 each leg<br>
+          • Battle Ropes: 3 sets of 30 sec<br><br>
+          
+          <b>Day 5 - Active Recovery:</b><br>
+          • Swimming or light cycling: 30 min<br>
+          • Yoga or stretching: 20 min
+        `,
+        "intermediate-maintain": `
+          <b>⚖️ Intermediate Maintenance (4x per week)</b><br>
+          <b>Day 1 - Push:</b><br>
+          • Bench Press: 4 sets of 10<br>
+          • Overhead Press: 4 sets of 10<br>
+          • Dips: 3 sets of 12<br>
+          • Lateral Raises: 3 sets of 15<br>
+          • Tricep Pushdowns: 3 sets of 15<br><br>
+          
+          <b>Day 2 - Pull:</b><br>
+          • Deadlifts: 4 sets of 8<br>
+          • Pull-ups: 4 sets of 10<br>
+          • Cable Rows: 3 sets of 12<br>
+          • Bicep Curls: 3 sets of 12<br>
+          • Face Pulls: 3 sets of 15<br><br>
+          
+          <b>Day 3 - Legs:</b><br>
+          • Squats: 4 sets of 10<br>
+          • Romanian Deadlifts: 3 sets of 12<br>
+          • Leg Press: 3 sets of 15<br>
+          • Leg Curls: 3 sets of 12<br>
+          • Ab Wheel Rollouts: 3 sets of 10<br><br>
+          
+          <b>Day 4 - Active Recovery:</b><br>
+          • 30 min light cardio<br>
+          • Mobility work and stretching
+        `,
+        "advanced-muscle": `
+          <b>💪 Advanced Muscle Building (5x per week)</b><br>
+          <b>Day 1 - Chest Hypertrophy:</b><br>
+          • Barbell Bench Press: 5 sets of 6-8 reps<br>
+          • Incline Barbell Press: 4 sets of 8-10<br>
+          • Dumbbell Flyes: 4 sets of 12<br>
+          • Cable Crossovers: 4 sets of 15<br>
+          • Dips (weighted): 3 sets of 10<br><br>
+          
+          <b>Day 2 - Back Thickness:</b><br>
+          • Deadlifts (heavy): 5 sets of 5 reps<br>
+          • Barbell Rows: 4 sets of 8<br>
+          • T-Bar Rows: 4 sets of 10<br>
+          • Lat Pulldowns: 4 sets of 12<br>
+          • Dumbbell Pullovers: 3 sets of 12<br><br>
+          
+          <b>Day 3 - Legs (Quad Focus):</b><br>
+          • Front Squats: 5 sets of 6-8<br>
+          • Leg Press: 4 sets of 12<br>
+          • Bulgarian Split Squats: 4 sets of 10 each<br>
+          • Leg Extensions: 4 sets of 15<br>
+          • Calf Raises: 5 sets of 20<br><br>
+          
+          <b>Day 4 - Shoulders & Traps:</b><br>
+          • Overhead Press: 5 sets of 6-8<br>
+          • Dumbbell Lateral Raises: 4 sets of 12<br>
+          • Rear Delt Flyes: 4 sets of 15<br>
+          • Barbell Shrugs: 4 sets of 12<br>
+          • Face Pulls: 4 sets of 20<br><br>
+          
+          <b>Day 5 - Arms & Abs:</b><br>
+          • Close-grip Bench: 4 sets of 8<br>
+          • Barbell Curls: 4 sets of 10<br>
+          • Skull Crushers: 4 sets of 12<br>
+          • Hammer Curls: 4 sets of 12<br>
+          • Weighted Planks: 4 sets of 60 sec<br>
+          • Hanging Leg Raises: 4 sets of 15
+        `,
+        "advanced-lose": `
+          <b>🔥 Advanced Fat Loss (6x per week)</b><br>
+          <b>Day 1 - HIIT + Strength:</b><br>
+          • 10 min HIIT warm-up<br>
+          • Heavy Compound lifts: 5 sets of 5<br>
+          • Circuit: Burpees, KB swings, box jumps<br>
+          • 15 min battle ropes/rowing intervals<br><br>
+          
+          <b>Day 2 - Long Cardio:</b><br>
+          • 60 min steady-state cardio<br>
+          • Zone 2 heart rate (conversational pace)<br><br>
+          
+          <b>Day 3 - Metabolic Conditioning:</b><br>
+          • 5 rounds for time:<br>
+          • 15 Thrusters<br>
+          • 20 Box Jumps<br>
+          • 25 Kettlebell Swings<br>
+          • 30 Wall Balls<br><br>
+          
+          <b>Day 4 - HIIT Intervals:</b><br>
+          • Sprints: 8x 200m (90 sec rest)<br>
+          • Assault bike: 10x 30 sec max effort<br>
+          • Rowing: 5x 500m (2 min rest)<br><br>
+          
+          <b>Day 5 - Active Cardio:</b><br>
+          • Swimming: 45 min<br>
+          • Cycling: 30 min moderate<br>
+          • Core circuit: 20 min<br><br>
+          
+          <b>Day 6 - Recovery/Light:</b><br>
+          • 30 min walk or light jog<br>
+          • Yoga or mobility: 30 min<br>
+          • Foam rolling and stretching
+        `,
+        "advanced-maintain": `
+          <b>⚖️ Advanced Maintenance (5x per week)</b><br>
+          <b>Day 1 - Push (Strength):</b><br>
+          • Bench Press: 5 sets of 5 reps<br>
+          • Overhead Press: 4 sets of 6<br>
+          • Incline DB Press: 4 sets of 10<br>
+          • Dips: 3 sets of 12<br>
+          • Tricep Work: 4 sets of 12<br><br>
+          
+          <b>Day 2 - Pull (Strength):</b><br>
+          • Deadlifts: 5 sets of 5<br>
+          • Weighted Pull-ups: 4 sets of 6-8<br>
+          • Barbell Rows: 4 sets of 8<br>
+          • Cable Rows: 3 sets of 12<br>
+          • Bicep & Rear Delt work: 4 sets each<br><br>
+          
+          <b>Day 3 - Legs (Heavy):</b><br>
+          • Squats: 5 sets of 5<br>
+          • Romanian Deadlifts: 4 sets of 8<br>
+          • Leg Press: 4 sets of 12<br>
+          • Hamstring Curls: 3 sets of 15<br>
+          • Core circuit: 15 min<br><br>
+          
+          <b>Day 4 - Upper Body (Volume):</b><br>
+          • Bench Press: 4 sets of 10<br>
+          • Pull-ups: 4 sets of 10<br>
+          • DB Press: 3 sets of 12<br>
+          • Cable Rows: 3 sets of 12<br>
+          • Arm superset: 4 rounds<br><br>
+          
+          <b>Day 5 - Lower Body (Volume):</b><br>
+          • Front Squats: 4 sets of 10<br>
+          • Lunges: 3 sets of 12 each<br>
+          • Leg Curls: 4 sets of 12<br>
+          • Calf Raises: 4 sets of 20<br>
+          • Abs: 4 different exercises
+        `
+      };
+
+      const key = `${level}-${goal}`;
+      const plan = plans[key] || "Custom plan coming soon!";
+      out.innerHTML = `<b>Your workout plan:</b><br>${plan}`;
+    };
+  }
+
+  
+// ===== Reviews: submit new review =====
+document.addEventListener("click", (e) => {
+  if(e.target && e.target.id === "sendReviewBtn") {
+    const role = document.getElementById("reviewRole").value;
+    const text = document.getElementById("reviewText").value.trim();
+    const msg = document.getElementById("reviewMsg");
+    if(!text) {
+      msg.textContent = "Please write something 😊";
+      return;
+    }
+    const listId = role === "trainer" ? "trainersReviews" : "studentsReviews";
+    const list = document.getElementById(listId);
+    const li = document.createElement("li");
+    li.style.marginTop = "8px";
+    li.innerHTML = `${role === "trainer" ? "Trainer" : "Student"}: "${text}"`;
+    list.appendChild(li);
+    msg.textContent = "Thank you for your review! ✨";
+    document.getElementById("reviewText").value = "";
+  }
+});
+
+  // ===== Bind cards =====
+  bindCards();
+
+  // ===== "Join" button =====
+  const joinBtn = document.querySelector("section.tech-cta .btn-outline");
+  if(joinBtn){
+    joinBtn.addEventListener("click", () => {
+      openModal(`
+        <h2>🚀 Join FITHUB</h2>
+        <p class="muted">Leave your email and choose your role:</p>
+        <input id="joinEmail" type="email" placeholder="Your email">
+        <select id="joinRole">
+          <option value="">Choose role</option>
+          <option value="student">Student</option>
+          <option value="trainer">Trainer</option>
+        </select>
+        <button id="joinSubmit">Get link</button>
+        <div id="joinResult" style="margin-top:12px; font-weight:700; color:var(--accent)"></div>
+      `);
+
+      document.getElementById("joinSubmit").onclick = () => {
+        const email = document.getElementById("joinEmail").value.trim();
+        const role = document.getElementById("joinRole").value;
+        const resultBox = document.getElementById("joinResult");
+
+        if(!email || !role){
+          resultBox.textContent = "Please fill in email and choose a role.";
+          return;
+        }
+
+        const links = {
+          "student":"https://t.me/fitthubbot?start=student",
+          "trainer":"https://t.me/fitthubbot?start=trainer"
+        };
+
+        resultBox.innerHTML = `
+          Thank you! Your role: <b>${role === "student" ? "Student" : "Trainer"}</b>.<br>
+          Go to bot: <a href="${links[role]}" target="_blank">Click here</a>
+        `;
+      };
+    });
+  }
+
+});
+</script>
+</body>
+</html>
