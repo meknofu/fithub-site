@@ -1100,26 +1100,83 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   
+// ===== Load existing reviews from API =====
+async function loadReviews() {
+  try {
+    const API_URL = window.location.hostname === 'localhost' 
+      ? 'http://localhost:5000'
+      : window.location.origin.replace('3000', '5000'); // Adjust port if needed
+    
+    const response = await fetch(`${API_URL}/api/reviews`);
+    const reviews = await response.json();
+    
+    // Clear existing placeholder reviews
+    document.getElementById("trainersReviews").innerHTML = '';
+    document.getElementById("studentsReviews").innerHTML = '';
+    
+    // Add reviews from database
+    reviews.forEach(review => {
+      const listId = review.role === "trainer" ? "trainersReviews" : "studentsReviews";
+      const list = document.getElementById(listId);
+      const li = document.createElement("li");
+      li.style.marginTop = "8px";
+      li.innerHTML = `${review.role === "trainer" ? "Trainer" : "Student"}: "${review.text}"`;
+      list.appendChild(li);
+    });
+  } catch (error) {
+    console.error("Error loading reviews:", error);
+  }
+}
+
+// Load reviews when page loads
+document.addEventListener('DOMContentLoaded', loadReviews);
+
 // ===== Reviews: submit new review =====
 document.addEventListener("click", (e) => {
   if(e.target && e.target.id === "sendReviewBtn") {
     const role = document.getElementById("reviewRole").value;
     const text = document.getElementById("reviewText").value.trim();
     const msg = document.getElementById("reviewMsg");
+    
     if(!text) {
       msg.textContent = "Please write something 😊";
       return;
     }
-    const listId = role === "trainer" ? "trainersReviews" : "studentsReviews";
-    const list = document.getElementById(listId);
-    const li = document.createElement("li");
-    li.style.marginTop = "8px";
-    li.innerHTML = `${role === "trainer" ? "Trainer" : "Student"}: "${text}"`;
-    list.appendChild(li);
-    msg.textContent = "Thank you for your review! ✨";
-    document.getElementById("reviewText").value = "";
+    
+    // Send to backend API
+    const API_URL = window.location.hostname === 'localhost' 
+      ? 'http://localhost:5000'
+      : window.location.origin.replace('3000', '5000');
+    
+    fetch(`${API_URL}/api/reviews`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({role, text})
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.status === "success") {
+        // Add to UI
+        const listId = role === "trainer" ? "trainersReviews" : "studentsReviews";
+        const list = document.getElementById(listId);
+        const li = document.createElement("li");
+        li.style.marginTop = "8px";
+        li.innerHTML = `${role === "trainer" ? "Trainer" : "Student"}: "${text}"`;
+        list.appendChild(li);
+        
+        msg.textContent = "Thank you for your review! ✨";
+        document.getElementById("reviewText").value = "";
+      } else {
+        msg.textContent = "Error: " + (data.error || "Unknown error");
+      }
+    })
+    .catch(err => {
+      console.error("Submit error:", err);
+      msg.textContent = "Error submitting review";
+    });
   }
 });
+
 
   // ===== Bind cards =====
   bindCards();
