@@ -1103,7 +1103,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ===== Load existing reviews from API =====
 async function loadReviews() {
   try {
-    const API_URL = window.location.hostname === 'localhost' 
+    const API_URL = 'fithub-backend-production.up.railway.app' 
       ? 'http://localhost:5000'
       : window.location.origin.replace('3000', '5000'); // Adjust port if needed
     
