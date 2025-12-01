@@ -430,9 +430,52 @@ document.addEventListener("DOMContentLoaded", () => {
     item.addEventListener("click", () => {
       const key = item.dataset.modal;
       if(menuItems[key]) openModal(menuItems[key]);
+        if (key === "reviews") {
+          bindReviewsForm();
     });
   });
 
+  function bindReviewsForm() {
+    const roleEl = document.getElementById("reviewRole");
+    const textEl = document.getElementById("reviewText");
+    const btn = document.getElementById("sendReviewBtn");
+    const msg = document.getElementById("reviewMsg");
+
+    if (!roleEl || !textEl || !btn || !msg) return;
+
+    btn.onclick = async () => {
+      const role = roleEl.value;
+      const text = textEl.value.trim();
+      msg.textContent = "";
+
+      if (!text) {
+        msg.textContent = "Please write a review.";
+        return;
+      }
+
+      try {
+        const res = await fetch("https://fithub.up.railway.app/api/reviews", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ role, text }),
+        });
+
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(`HTTP ${res.status}: ${errText}`);
+        }
+
+        const data = await res.json();
+        console.log("Saved review:", data);
+        msg.textContent = "Thank you! Your review has been submitted.";
+        textEl.value = "";
+      } catch (err) {
+        console.error("Submit error:", err);
+        msg.textContent = "Error submitting review. Please try again.";
+      }
+    };
+  }
+  
   // ===== "Learn more" button scrolls to cards =====
   const btnMore = document.querySelector(".btn-primary");
   const cardsSection = document.querySelector(".cards-row");
