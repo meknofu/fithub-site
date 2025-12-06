@@ -457,8 +457,7 @@ function bindReviewsForm() {
     }
 
     try {
-      const res = await fetch("https://fithub.up.railway.app/api/reviews", {
-        method: "POST",
+      const res = await fetch("https://fithub-backend-production.up.railway.app/api/reviews", {        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role, text }),
       });
