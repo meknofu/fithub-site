@@ -427,12 +427,59 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   document.querySelectorAll(".top-menu-item").forEach(item => {
-    item.addEventListener("click", () => {
-      const key = item.dataset.modal;
-      if(menuItems[key]) openModal(menuItems[key]);
-    });
+  item.addEventListener("click", () => {
+    const key = item.dataset.modal;
+    if (menuItems[key]) {
+      openModal(menuItems[key]);
+      if (key === "reviews") {
+        bindReviewsForm();
+      }
+    }
   });
+});
 
+function bindReviewsForm() {
+  const roleEl = document.getElementById("reviewRole");
+  const textEl = document.getElementById("reviewText");
+  const btn = document.getElementById("sendReviewBtn");
+  const msg = document.getElementById("reviewMsg");
+
+  if (!roleEl || !textEl || !btn || !msg) return;
+
+  btn.onclick = async () => {
+    const role = roleEl.value;
+    const text = textEl.value.trim();
+    msg.textContent = "";
+
+    if (!text) {
+      msg.textContent = "Please write a review.";
+      return;
+    }
+
+    try {
+      const res = await fetch("https://fithub.up.railway.app/api/reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ role, text }),
+      });
+
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`HTTP ${res.status}: ${errText}`);
+      }
+
+      const data = await res.json();
+      console.log("Saved review:", data);
+      msg.textContent = "Thank you! Your review has been submitted.";
+      textEl.value = "";
+    } catch (err) {
+      console.error("Submit error:", err);
+      msg.textContent = "Error submitting review. Please try again.";
+    }
+  };
+}
+
+  
   // ===== "Learn more" button scrolls to cards =====
   const btnMore = document.querySelector(".btn-primary");
   const cardsSection = document.querySelector(".cards-row");
@@ -1100,26 +1147,83 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   
+// ===== Load existing reviews from API =====
+async function loadReviews() {
+  try {
+    const API_URL = 'fithub-backend-production.up.railway.app' 
+      ? 'http://localhost:5000'
+      : window.location.origin.replace('3000', '5000'); // Adjust port if needed
+    
+    const response = await fetch(`${API_URL}/api/reviews`);
+    const reviews = await response.json();
+    
+    // Clear existing placeholder reviews
+    document.getElementById("trainersReviews").innerHTML = '';
+    document.getElementById("studentsReviews").innerHTML = '';
+    
+    // Add reviews from database
+    reviews.forEach(review => {
+      const listId = review.role === "trainer" ? "trainersReviews" : "studentsReviews";
+      const list = document.getElementById(listId);
+      const li = document.createElement("li");
+      li.style.marginTop = "8px";
+      li.innerHTML = `${review.role === "trainer" ? "Trainer" : "Student"}: "${review.text}"`;
+      list.appendChild(li);
+    });
+  } catch (error) {
+    console.error("Error loading reviews:", error);
+  }
+}
+
+// Load reviews when page loads
+document.addEventListener('DOMContentLoaded', loadReviews);
+
 // ===== Reviews: submit new review =====
 document.addEventListener("click", (e) => {
   if(e.target && e.target.id === "sendReviewBtn") {
     const role = document.getElementById("reviewRole").value;
     const text = document.getElementById("reviewText").value.trim();
     const msg = document.getElementById("reviewMsg");
+    
     if(!text) {
       msg.textContent = "Please write something 😊";
       return;
     }
-    const listId = role === "trainer" ? "trainersReviews" : "studentsReviews";
-    const list = document.getElementById(listId);
-    const li = document.createElement("li");
-    li.style.marginTop = "8px";
-    li.innerHTML = `${role === "trainer" ? "Trainer" : "Student"}: "${text}"`;
-    list.appendChild(li);
-    msg.textContent = "Thank you for your review! ✨";
-    document.getElementById("reviewText").value = "";
+    
+    // Send to backend API
+    const API_URL = window.location.hostname === 'localhost' 
+      ? 'http://localhost:5000'
+      : window.location.origin.replace('3000', '5000');
+    
+    fetch(`${API_URL}/api/reviews`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({role, text})
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.status === "success") {
+        // Add to UI
+        const listId = role === "trainer" ? "trainersReviews" : "studentsReviews";
+        const list = document.getElementById(listId);
+        const li = document.createElement("li");
+        li.style.marginTop = "8px";
+        li.innerHTML = `${role === "trainer" ? "Trainer" : "Student"}: "${text}"`;
+        list.appendChild(li);
+        
+        msg.textContent = "Thank you for your review! ✨";
+        document.getElementById("reviewText").value = "";
+      } else {
+        msg.textContent = "Error: " + (data.error || "Unknown error");
+      }
+    })
+    .catch(err => {
+      console.error("Submit error:", err);
+      msg.textContent = "Error submitting review";
+    });
   }
 });
+
 
   // ===== Bind cards =====
   bindCards();
