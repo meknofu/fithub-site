@@ -1188,33 +1188,6 @@ function bindReviewsForm() {
   }
 
   
-// ===== Load existing reviews from API =====
-async function loadReviews() {
-  try {
-    const API_URL = 'fithub-backend-production.up.railway.app' 
-      ? 'http://localhost:5000'
-      : window.location.origin.replace('3000', '5000'); // Adjust port if needed
-    
-    const response = await fetch(`${API_URL}/api/reviews`);
-    const reviews = await response.json();
-    
-    // Clear existing placeholder reviews
-    document.getElementById("trainersReviews").innerHTML = '';
-    document.getElementById("studentsReviews").innerHTML = '';
-    
-    // Add reviews from database
-    reviews.forEach(review => {
-      const listId = review.role === "trainer" ? "trainersReviews" : "studentsReviews";
-      const list = document.getElementById(listId);
-      const li = document.createElement("li");
-      li.style.marginTop = "8px";
-      li.innerHTML = `${review.role === "trainer" ? "Trainer" : "Student"}: "${review.text}"`;
-      list.appendChild(li);
-    });
-  } catch (error) {
-    console.error("Error loading reviews:", error);
-  }
-}
 
 // Load reviews when page loads
 document.addEventListener('DOMContentLoaded', loadReviews);
@@ -1232,10 +1205,7 @@ document.addEventListener("click", (e) => {
     }
     
     // Send to backend API
-    const API_URL = window.location.hostname === 'localhost' 
-      ? 'http://localhost:5000'
-      : window.location.origin.replace('3000', '5000');
-    
+    const API_URL = 'https://fithub-backend-production.up.railway.app';    
     fetch(`${API_URL}/api/reviews`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
