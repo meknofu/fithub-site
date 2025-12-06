@@ -445,6 +445,9 @@ function bindReviewsForm() {
   const msg = document.getElementById("reviewMsg");
 
   if (!roleEl || !textEl || !btn || !msg) return;
+  
+  // Load existing reviews
+  loadReviews();
 
   btn.onclick = async () => {
     const role = roleEl.value;
@@ -471,12 +474,55 @@ function bindReviewsForm() {
       console.log("Saved review:", data);
       msg.textContent = "Thank you! Your review has been submitted.";
       textEl.value = "";
+      
+      // Reload reviews to show the new one
+      loadReviews();
     } catch (err) {
       console.error("Submit error:", err);
       msg.textContent = "Error submitting review. Please try again.";
     }
   };
 }
+
+  // Function to load and display reviews from backend
+  async function loadReviews() {
+    try {
+      const res = await fetch("https://fithub-backend-production.up.railway.app/api/reviews");
+      const reviews = await res.json();
+      
+      const trainersUl = document.getElementById("trainersReviews");
+      const studentsUl = document.getElementById("studentsReviews");
+      
+      if (trainersUl && studentsUl) {
+        // Clear existing reviews
+        trainersUl.innerHTML = "";
+        studentsUl.innerHTML = "";
+        
+        // Group reviews by role
+        reviews.forEach(review => {
+          const li = document.createElement("li");
+          const roleLabel = review.role === "trainer" ? "Trainer" : "Student";
+          li.textContent = `${roleLabel}: "${review.text}"`;
+          
+          if (review.role === "trainer") {
+            trainersUl.appendChild(li);
+          } else {
+            studentsUl.appendChild(li);
+          }
+        });
+        
+        // If no reviews, show placeholder
+        if (trainersUl.children.length === 0) {
+          trainersUl.innerHTML = "<li>No trainer reviews yet.</li>";
+        }
+        if (studentsUl.children.length === 0) {
+          studentsUl.innerHTML = "<li>No student reviews yet.</li>";
+        }
+      }
+    } catch (err) {
+      console.error("Error loading reviews:", err);
+    }
+  }
 
   
   // ===== "Learn more" button scrolls to cards =====
